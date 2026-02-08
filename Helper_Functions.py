@@ -62,7 +62,6 @@ def Grover_operator(oracle: QuantumCircuit, insert_barriers: bool = False, name:
     if insert_barriers:
         circuit.barrier()
 
-    # (2) Add the inverse state preparation.
     reflection_qubits = [
         i for i, qubit in enumerate(circuit.qubits)
     ]
@@ -72,7 +71,7 @@ def Grover_operator(oracle: QuantumCircuit, insert_barriers: bool = False, name:
     if insert_barriers:
         circuit.barrier()
 
-    # (3) Add the zero reflection.
+    # Add the zero reflection.
     num_reflection = len(reflection_qubits)
 
     circuit.x(reflection_qubits)
@@ -98,7 +97,7 @@ def Grover_operator(oracle: QuantumCircuit, insert_barriers: bool = False, name:
 
     if insert_barriers:
         circuit.barrier()
-    # (4) Add the state preparation.
+
     circuit.h(reflection_qubits)
 
     # minus sign
@@ -109,11 +108,10 @@ def Grover_operator(oracle: QuantumCircuit, insert_barriers: bool = False, name:
 
 def Get_Data_from_Fake_backend(shots, circuit, fake_backend):
 
-    # Run the sampler job locally using AerSimulator.
     pm = generate_preset_pass_manager(
         backend=fake_backend, optimization_level=1)
     isa_circuit = pm.run(circuit)
-    # sampler = StatevectorSampler()
+
     sampler = Sampler(mode=fake_backend)
     # Run using sampler
     result = sampler.run([isa_circuit], shots=shots).result()
