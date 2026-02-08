@@ -158,8 +158,8 @@ jupyter notebook Grover_Lab_experiment_1.ipynb
 - Nielsen & Chuang: "Quantum Computation and Quantum Information"
 
 ### Qiskit Documentation
-- [Qiskit Runtime Sampler](https://qiskit.org/documentation/partners/qiskit_ibm_runtime/)
-- [Circuit Library](https://qiskit.org/documentation/stubs/qiskit.circuit.library.html)
+- [Qiskit Runtime Sampler](https://quantum.cloud.ibm.com/docs/en/api/qiskit-ibm-runtime/sampler-v2)
+- [Circuit Library](https://quantum.cloud.ibm.com/docs/en/api/qiskit/circuit)
 
 
 
