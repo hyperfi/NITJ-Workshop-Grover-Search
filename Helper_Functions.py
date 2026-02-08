@@ -107,11 +107,21 @@ def Grover_operator(oracle: QuantumCircuit, insert_barriers: bool = False, name:
 
 
 def Get_Data_from_Fake_backend(shots, circuit, fake_backend):
+    """
+    Run a circuit on a fake backend and return the result data for PUB 0
 
+    Parameters:
+        shots (int): Number of shots to run the circuit
+        circuit (QuantumCircuit): Circuit to run
+        fake_backend (FakeBackend): Fake backend to run the circuit on
+
+    Returns:
+        data_pub (dict): Result data for PUB 0
+
+    """
     pm = generate_preset_pass_manager(
         backend=fake_backend, optimization_level=1)
     isa_circuit = pm.run(circuit)
-
     sampler = Sampler(mode=fake_backend)
     # Run using sampler
     result = sampler.run([isa_circuit], shots=shots).result()
