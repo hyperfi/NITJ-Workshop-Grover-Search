@@ -161,7 +161,10 @@ jupyter notebook Grover_Lab_experiment_1.ipynb
 - [Qiskit Runtime Sampler](https://quantum.cloud.ibm.com/docs/en/api/qiskit-ibm-runtime/sampler-v2)
 - [Circuit Library](https://quantum.cloud.ibm.com/docs/en/api/qiskit/circuit)
 
+### Workshop Website
+- [NITJ Workshop Series](https://sites.google.com/nitj.ac.in/qt2026/home)
 
+---
 
 ## Troubleshooting
 
