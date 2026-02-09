@@ -17,32 +17,38 @@ Grover's Algorithm is one of the most important quantum algorithms, providing a 
 
 ```
 NITJ-Workshop-Grover-Search/
-├── ReadMe.md                          # This file
+├── README.md                          # This file
 ├── Helper_Functions.py                # Reusable quantum functions
 ├── Grover_Lab_experiment_1.ipynb      # Exercise 1: Scaling with qubits
 ├── Grover_Lab_experiment_2.ipynb      # Exercise 2: Over-rotation phenomenon
-└── Grover_Lab_experiment_3.ipynb      # Exercise 3: Multiple solutions & efficiency
+├── Grover_Lab_experiment_3.ipynb      # Exercise 3: Multiple solutions & efficiency
+├── Grover_Lab_experiment_4.ipynb      # Exercise 4: Solving Sudoku using Grover's algorithm
+└── Sudoku.ipynb                        # Notebook: 2x2 binary Sudoku example
 ```
 
 ## Files Description
 
 ### Helper_Functions.py
-Provides three core functions for implementing Grover's algorithm:
+Provides core helper functions used across the notebooks, including utilities for building oracles, operators, and running on fake backends:
 
 - **`Grover_oracle(marked_states)`**
-  - Creates a quantum oracle that marks target states with a phase flip
-  - Supports multiple marked states
-  - Returns a `QuantumCircuit` implementing the oracle
-  
-- **`Grover_operator(oracle, insert_barriers, name)`**
-  - Constructs the full Grover iteration operator (oracle + diffusion)
-  - Includes controlled Hadamard gates and multi-controlled NOT gates
-  - Optional barrier visualization for circuit inspection
+   - Creates a quantum oracle that marks target states with a phase flip
+   - Supports multiple marked states
+   - Returns a `QuantumCircuit` implementing the oracle
+
+- **`Grover_operator(oracle, insert_barriers, name, reflection_qubits)`**
+   - Constructs the full Grover iteration operator (oracle + diffusion)
+   - Supports selecting which qubits the diffusion acts on
+   - Optional barrier visualization for circuit inspection
 
 - **`Get_Data_from_Fake_backend(shots, circuit, fake_backend)`**
-  - Transpiles and runs circuits on simulated backends
-  - Returns measurement statistics without requiring actual hardware
-  - Uses Qiskit Runtime Sampler for efficient execution
+   - Transpiles and runs circuits on simulated backends
+   - Returns measurement statistics without requiring actual hardware
+   - Uses Qiskit Runtime Sampler for efficient execution
+
+- **Sudoku helpers** (`XOR`, `Sudoku_oracle`)  
+   - `XOR(qc, a, b, output)` performs pairwise XOR into a clause qubit
+   - `Sudoku_oracle(var_qubits, clause_list, clause_qubits, output_qubit)` builds a clause-based oracle for small Sudoku instances (used in `Sudoku.ipynb`)
 
 ### Experiment Notebooks
 
