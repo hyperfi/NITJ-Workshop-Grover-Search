@@ -46,12 +46,13 @@ def Grover_oracle(marked_states):
     return qc
 
 
-def Grover_operator(oracle: QuantumCircuit, insert_barriers: bool = False, name: str = "Q",):
+def Grover_operator(oracle: QuantumCircuit, insert_barriers: bool = False, name: str = "Q", reflection_qubits=None) -> QuantumCircuit:
     """Build the Grover operator given an oracle.
     Parameters:
         oracle (QuantumCircuit): Oracle circuit
         insert_barriers (bool): Whether to insert barriers between sections
         name (str): Name of the Grover operator circuit
+        reflection_qubits (list): List of qubits to apply the reflection on. If None, applies to all qubits.
     Returns:
         QuantumCircuit: Grover operator circuit
     """
@@ -62,9 +63,10 @@ def Grover_operator(oracle: QuantumCircuit, insert_barriers: bool = False, name:
     if insert_barriers:
         circuit.barrier()
 
-    reflection_qubits = [
-        i for i, qubit in enumerate(circuit.qubits)
-    ]
+    if reflection_qubits is None:
+        reflection_qubits = [
+            i for i, qubit in enumerate(circuit.qubits)
+        ]
 
     circuit.h(reflection_qubits)  # H is self-inverse
 
@@ -128,3 +130,32 @@ def Get_Data_from_Fake_backend(shots, circuit, fake_backend):
     # Access result data for PUB 0
     data_pub = result[0].data
     return data_pub
+
+
+def XOR(qc, a, b, output):
+    qc.cx(a, output)
+    qc.cx(b, output)
+
+
+def Sudoku_oracle(var_qubits, clause_list, clause_qubits, output_qubit):
+    qc = QuantumCircuit(var_qubits, clause_qubits, output_qubit)
+
+    # Compute clauses
+    i = 0
+    for clause in clause_list:
+        XOR(qc, clause[0], clause[1], clause_qubits[i])
+        i += 1
+
+    # Flip 'output' bit if all clauses are satisfied
+    mcx = MCXGate(len(clause_qubits))
+    mcx_index = [i for i in range(len(var_qubits), len(
+        var_qubits)+len(clause_qubits)+len(output_qubit))]
+
+    qc.append(mcx, mcx_index)
+
+    # Uncompute clauses to reset clause-checking bits to 0
+    i = 0
+    for clause in clause_list:
+        XOR(qc, clause[0], clause[1], clause_qubits[i])
+        i += 1
+    return qc
